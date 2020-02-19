@@ -84,14 +84,6 @@ variable "vnf_vpc_image_name" {
 }
 
 ##############################################################################
-# vnf_image_copy - Do you want to copy the f5 image to your IBM Cloud account. Skip copy image, if your image is already copied.
-##############################################################################
-variable "vnf_image_copy" {
-  default     = "y"
-  description = "Copy F5-BIGIP custom image to your IBM Cloud account (y/n)."
-}
-
-##############################################################################
 # vnf_vpc_image_name - The name of your F5-BIGIP Virtual Server to be provisioned
 ##############################################################################
 variable "vnf_instance_name" {
@@ -117,3 +109,7 @@ variable "ibmcloud_endpoint" {
   description = "The IBM Cloud environmental variable 'cloud.ibm.com' or 'test.cloud.ibm.com'"
 }
 
+variable "delete_custom_image_confirmation" {
+  default     = ""
+  description = "This variable is to get the confirmation from customers that they will delete the custom image manually, post successful installation of VNF instances. Customer should enter 'Yes' to proceed further with the installation."
+}

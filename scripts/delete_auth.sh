@@ -5,6 +5,11 @@ set -e
 
 # TO-DO comments on input variables
 
+ibmcloud_endpoint=""
+ibmcloud_svc_api_key=""
+region=""
+id=""
+
 ####
 ## USAGE: Called by bash when exiting on error.
 ## Will dump stdout and stderr from lgo file to stdout
@@ -36,11 +41,12 @@ function parse_input() {
 function login() {
     _log "## Entering function: ${FUNCNAME[0]}"
     # Login to IBMCloud for given region and resource-group
-    ibmcloud login -a $ibmcloud_endpoint --apikey $ibmcloud_svc_api_key -r $region &> $MSG_FILE
+    ibmcloud login -a "$ibmcloud_endpoint" --apikey "$ibmcloud_svc_api_key" -r "$region" &> "$MSG_FILE"
     _log "## Exiting function: ${FUNCNAME[0]}"
 }
 
 function delete_policy() {
+    
     _log "## Entering function: ${FUNCNAME[0]}"
     status=$(eval "ibmcloud iam authorization-policy-delete -f $id")
     _log "## Exiting function: ${FUNCNAME[0]}"

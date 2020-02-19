@@ -58,11 +58,13 @@ data "external" "authorize_policy_for_image" {
   }
 }
 
+# Generating random ID
+resource "random_uuid" "test" { }
+
 resource "ibm_is_image" "f5_custom_image" {
-  count            = "${var.vnf_image_copy == "y" ? 1 : 0}"
-  depends_on       = ["data.external.authorize_policy_for_image"]
+  depends_on       = ["data.external.authorize_policy_for_image", "random_uuid.test"]
   href             = "${local.image_url}"
-  name             = "${var.vnf_vpc_image_name}"
+  name             = "${var.vnf_vpc_image_name}-${random_uuid.test.result}"
   operating_system = "centos-7-amd64"
 
   timeouts {
@@ -84,7 +86,7 @@ data "external" "delete_auth_policy_for_image" {
 }
 
 data "ibm_is_image" "f5_custom_image" {
-  name       = "${var.vnf_vpc_image_name}"
+  name       = "${var.vnf_vpc_image_name}-${random_uuid.test.result}"
   depends_on = ["ibm_is_image.f5_custom_image"]
 }
 

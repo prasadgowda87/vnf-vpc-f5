@@ -4,6 +4,20 @@ Use this template to create F5-BIGIP virtual server using custom image from your
 
 _The F5-BIGIP virtual server instance only supports BYOL at this time._
 
+## Support
+
+#F5 BIG-IP Virtual Edition - 
+You can open a support case in the F5 WebSupport Portal at https://websupport.f5.com/, review additional F5 technical support documentation at https://support.f5.com/csp/article/K25327565 or contact F5 support directly (24x7x365):
+- North America: 1-888-882-7535
+- Outside North America: +800 11 ASK 4 F5 (800 1127 5435)
+
+F5 support centers are strategically located for partners and customers in APAC, Japan, EMEA and North America. Regionally located support centers enable F5 to provide support in a number of languages through native-speaking engineers who are available when you are. An annual support contract may be purchased separately from F5 Technical Support Services at https://support.f5.com.
+
+#IBM Cloud IaaS Support
+You're provided free technical support through the IBM Cloud™ community and Stack Overflow, which you can access from the Support Center. The level of support that you select determines the severity that you can assign to support cases and your level of access to the tools available in the Support Center. Choose a Basic, Advanced, or Premium support plan to customize your IBM Cloud™ support experience for your business needs. 
+
+Learn more; https://www.ibm.com/cloud/support
+
 ## Prerequisites
 
 - Must have access to [Gen 2 VPC](https://cloud.ibm.com/vpc-ext/network/vpcs).
@@ -51,6 +65,7 @@ Fill in the following values, based on the steps that you completed before you b
 | `vnf_instance_name` | The name of the VNF instance to be provisioned. |
 | `subnet_id` | The ID of the subnet where the VNF instance will be deployed. Click on the subnet details in the VPC Subnet Listing to determine this value | 
 | `ibmcloud_endpoint` | The IBM Cloud environment `cloud.ibm.com` or `test.cloud.ibm.com` |
+| `delete_custom_image_confirmation` | A confirmation from the user to delete the custom image post successful creation of VSI |
 
 ### Outputs
 After you apply the template your VPC resources are successfully provisioned in IBM Cloud, you can review information such as the virtual server IP addresses and VPC identifiers in the Schematics log files, in the `Terraform SHOW and APPLY` section.
