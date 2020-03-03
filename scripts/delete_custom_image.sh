@@ -81,7 +81,6 @@ MSG_FILE="/tmp/out.log" && rm -f "$MSG_FILE" &> /dev/null && touch "$MSG_FILE" &
 rias_endpoint=""
 
 # Main Script functions starts here
-printenv
 parse_input
 select_riaas_endpoint
 delete_image
