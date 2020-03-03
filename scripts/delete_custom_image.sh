@@ -55,9 +55,13 @@ function delete_image() {
     _log "## Entering function: ${FUNCNAME[0]}"
     # Command to delete Custom Image from user account.
     # IC_IAM_TOKEN - Provided by IBM Cloud Schematics
+    token=$IC_IAM_TOKEN
+    if [[ $token != Bearer* ]]; then
+        token="Bearer "$token
+    fi
     curl -X DELETE \
     "$rias_endpoint/v1/images/$custom_image_id?version=2020-01-28&generation=2" \
-    -H "Authorization: Bearer $IC_IAM_TOKEN" &> "$MSG_FILE"
+    -H "Authorization: $token" &> "$MSG_FILE"
     _log "## Exiting function: ${FUNCNAME[0]}"
 }
 
