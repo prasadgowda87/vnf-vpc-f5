@@ -2,7 +2,7 @@
 
 # Exit if any of the intermediate steps fail
 set -e
-
+#set -x
 # TO-DO comments on input variables
 
 ####
@@ -26,6 +26,15 @@ function _log() {
 ## Takes terrform input and sets global variables
 ####
 # eval "$(jq -r '@sh "FOO=\(.foo) BAZ=\(.baz)"')"
+target_resource_instance_id=""
+target_service_name=""
+source_service_name=""
+source_service_account=""
+source_resource_type=""
+roles=""
+ibmcloud_endpoint=""
+ibmcloud_svc_api_key=""
+region=""
 
 function parse_input() {
     _log "## Entering function: ${FUNCNAME[0]}"
@@ -33,16 +42,32 @@ function parse_input() {
     _log "## Exiting function: ${FUNCNAME[0]}"
 }
 
+function is_policy_exist() {
+    _log "## Entering function: ${FUNCNAME[0]}"
+    #fetch existing iam policies
+    cmd="ibmcloud iam authorization-policies --output json | jq 'map(select(.resources[]|(.attributes[].value == \"$target_resource_instance_id\" and .attributes[].value == \"$target_service_name\")))' | jq 'map(select( .subjects[] | (.attributes[].value == \"$source_service_name\" and .attributes[].value == \"$source_service_account\" and .attributes[].value == \"$source_resource_type\")))' | jq 'map(select( .roles[]| (.display_name == \"$roles\")))| .[].id'"
+
+    #fetch existing iam policies
+   # cmd='ibmcloud iam authorization-policies --output json | jq "map(select(any(.resources[]; ((.attributes[].value == \"$target_resource_instance_id\" ) and (.attributes[].value == \"$target_service_name\")))) | select( any(.subjects[]; ((.attributes[].value == \"$source_service_name\") and (.attributes[].value == \"$source_service_account\" ) and (.attributes[].value == \"$source_resource_type\")))) | select( any(.roles[]; (.display_name == \"$roles\"))) ) "'
+
+    id=$(eval ${cmd}) 
+    #$id=$(echo $policies | jq '.[].id' )
+    _log "## Exiting function: ${FUNCNAME[0]}"
+} 
+
 function login() {
     _log "## Entering function: ${FUNCNAME[0]}"
     # Login to IBMCloud for given region and resource-group
-    ibmcloud login -a $ibmcloud_endpoint --apikey $ibmcloud_svc_api_key -r $region &> $MSG_FILE
+    ibmcloud login -a "$ibmcloud_endpoint" --apikey "$ibmcloud_svc_api_key" -r "$region" &> "$MSG_FILE"
     _log "## Exiting function: ${FUNCNAME[0]}"
 }
 
 function create_policy() {
     _log "## Entering function: ${FUNCNAME[0]}"
-    id=$(eval "ibmcloud iam authorization-policy-create $source_service_name $target_service_name $roles --source-service-account $source_service_account --source-resource-type $source_resource_type --target-service-instance-id $target_resource_instance_id --output json | jq '.id'")
+    
+  if [ -z "$id" ] ; then
+     id=$(eval "ibmcloud iam authorization-policy-create $source_service_name $target_service_name $roles --source-service-account $source_service_account --source-resource-type $source_resource_type --target-service-instance-id $target_resource_instance_id --output json | jq '.id'")
+   fi
     _log "## Exiting function: ${FUNCNAME[0]}"
 }
 
@@ -57,5 +82,6 @@ MSG_FILE="/tmp/out.log" && rm -f "$MSG_FILE" &> /dev/null && touch "$MSG_FILE" &
 
 parse_input
 login
+is_policy_exist
 create_policy
 produce_output
