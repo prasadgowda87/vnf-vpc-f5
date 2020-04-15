@@ -18,18 +18,6 @@ variable "ibmcloud_svc_api_key" {
  description  = "The APIKey of the IBM Cloud service account that is hosting the F5-BIGIP qcow2 image file. This should be a the API Key of a Service ID in the account"
 }
 
-##############################################################################
-# ibmcloud_svc_api_key_test - Cloud Service apikey hosting the F5-BIGIP
-#                            image in COS in test.cloud.ibm.com. This variable is not shown to user.
-#                            The value for this variable is enter at offering
-#                            onbaording time.
-##############################################################################
-variable "ibmcloud_svc_api_key_test" {
- default      = ""
- type         = "string"
- description  = "The APIKey of the IBM Cloud test service account that is hosting the F5-BIGIP qcow2 image file. This should be a the API Key of a Service ID in the account"
-}
-
 variable "region" {
   default     = "us-south"
   description = "The VPC Region that you want your VPC, networks and the F5 virtual server to be provisioned in. To list available regions, run `ibmcloud is regions`."

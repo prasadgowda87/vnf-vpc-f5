@@ -62,11 +62,6 @@ variable "vnf_profile" {
   description = "The profile of compute CPU and memory resources to be used when provisioning F5-BIGIP VSI. To list available profiles, run `ibmcloud is instance-profiles`."
 }
 
-variable "vnf_license" {
-  default     = ""
-  description = "Optional. The BYOL license key that you want your F5 virtual server in a VPC to be used by registration flow during cloud-init."
-}
-
 variable "ibmcloud_endpoint" {
   default     = "cloud.ibm.com"
   description = "The IBM Cloud environmental variable 'cloud.ibm.com' or 'test.cloud.ibm.com'"
