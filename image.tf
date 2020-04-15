@@ -16,10 +16,10 @@
 # about user from provider session
 # =============================================================================
 locals {
-  user_acct_id = "${substr(element(split("a/", data.ibm_is_vpc.f5_vpc.resource_crn), 1), 0, 32)}"
-  apikey = "${var.ibmcloud_endpoint == "cloud.ibm.com" ? var.ibmcloud_svc_api_key : var.ibmcloud_svc_api_key_test}"
-  instance_id = "${var.ibmcloud_endpoint == "cloud.ibm.com" ? var.vnf_cos_instance_id : var.vnf_cos_instance_id_test}"
-  image_url = "${var.ibmcloud_endpoint == "cloud.ibm.com" ? var.vnf_cos_image_url : var.vnf_cos_image_url_test}"
+  user_acct_id = "${substr(element(split("a/", data.ibm_is_subnet.f5_subnet1.resource_crn), 1), 0, 32)}"
+  apikey = "${var.ibmcloud_svc_api_key}"
+  instance_id = "${var.vnf_cos_instance_id}"
+  image_url = "${var.vnf_cos_image_url}"
 }
 
 ##############################################################################
@@ -40,7 +40,7 @@ locals {
 
 # IAM Authorization to create custom images
 data "external" "authorize_policy_for_image" {
-  depends_on = ["data.ibm_is_vpc.f5_vpc"]
+  depends_on = ["data.ibm_is_subnet.f5_subnet1"]
   program    = ["bash", "${path.module}/scripts/create_auth.sh"]
 
   query = {
@@ -66,6 +66,7 @@ resource "ibm_is_image" "f5_custom_image" {
   href             = "${local.image_url}"
   name             = "${var.vnf_vpc_image_name}-${substr(random_uuid.test.result,0,8)}"
   operating_system = "centos-7-amd64"
+  resource_group   = "${data.ibm_resource_group.rg.id}"
 
   timeouts {
     create = "30m"

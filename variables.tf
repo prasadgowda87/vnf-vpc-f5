@@ -24,43 +24,6 @@ variable "vnf_cos_image_url" {
 }
 
 ##############################################################################
-# vnf_cos_instance_id_test - Vendor provided COS instance-id hosting 
-#                               F5-BIGIP image in test.cloud.ibm.com. 
-#                               The value for this variable is enter at offering
-#                               onbaording time. This variable is hidden from the user.
-##############################################################################
-variable "vnf_cos_instance_id_test" {
-  default     = ""
-  description = "The COS instance-id hosting the F5-BIGIP qcow2 image in test.cloud.ibm.com."
-}
-
-##############################################################################
-# vnf_cos_image_url_test - Vendor provided F5-BIGIP image COS url in test.cloud.ibm.com.
-#                             The value for this variable is enter at offering
-#                             onbaording time.This variable is hidden from the user.
-##############################################################################
-variable "vnf_cos_image_url_test" {
-  default     = ""
-  description = "The COS image object url for F5-BIGIP qcow2 image in test.cloud.ibm.com."
-}
-
-##############################################################################
-# zone - VPC zone where resources are to be provisioned.
-##############################################################################
-variable "zone" {
-  default     = "us-south-1"
-  description = "The VPC Zone that you want your VPC networks and virtual servers to be provisioned in. To list available zones, run `ibmcloud is zones`."
-}
-
-##############################################################################
-# vpc_name - VPC where resources are to be provisioned.
-##############################################################################
-variable "vpc_name" {
-  default     = ""
-  description = "The name of your VPC where F5-BIGIP VSI is to be provisioned."
-}
-
-##############################################################################
 # subnet_name - Subnet where resources are to be provisioned.
 ##############################################################################
 variable "subnet_id"{
@@ -107,9 +70,4 @@ variable "vnf_license" {
 variable "ibmcloud_endpoint" {
   default     = "cloud.ibm.com"
   description = "The IBM Cloud environmental variable 'cloud.ibm.com' or 'test.cloud.ibm.com'"
-}
-
-variable "delete_custom_image_confirmation" {
-  default     = ""
-  description = "This variable is to get the confirmation from customers that they will delete the custom image manually, post successful installation of VNF instances. Customer should enter 'Yes' to proceed further with the installation."
 }

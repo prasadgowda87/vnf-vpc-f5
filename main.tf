@@ -15,7 +15,8 @@ data "ibm_is_region" "region" {
 # Read/validate Zone
 ##############################################################################
 data "ibm_is_zone" "zone" {
-  name = "${var.zone}"
+  depends_on = ["data.ibm_is_subnet.f5_subnet1"]
+  name = "${data.ibm_is_subnet.f5_subnet1.zone}"
   region = "${data.ibm_is_region.region.name}"
 }
 

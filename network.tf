@@ -6,15 +6,6 @@
 #  - Subnet in user specified region, zone and resource_group
 #  - Floating_IP attached to virtual server's primary network interface
 ##############################################################################
-
-
-##############################################################################
-# Read/validate VPC
-##############################################################################
-data "ibm_is_vpc" "f5_vpc" {
-  name = "${var.vpc_name}"
-}
-
 /*
 ##############################################################################
 # Create Subnet for a given VPC and Public-Gateway

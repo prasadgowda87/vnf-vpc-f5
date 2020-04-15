@@ -3,7 +3,7 @@
 ##############################################################################
 
 locals {
-  api_key = "${var.ibmcloud_endpoint == "cloud.ibm.com" ? var.ibmcloud_svc_api_key : var.ibmcloud_svc_api_key_test}"
+  api_key = "${var.ibmcloud_svc_api_key}"
 }
 
 ##############################################################################
