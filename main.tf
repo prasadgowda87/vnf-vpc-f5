@@ -24,5 +24,6 @@ data "ibm_is_zone" "zone" {
 # Read/validate Resource Group
 ##############################################################################
 data "ibm_resource_group" "rg" {
-  name = "${var.resource_group}"
+  depends_on = ["data.ibm_is_subnet.f5_subnet1"]
+  name = "${data.ibm_is_subnet.f5_subnet1.resource_group_name}"
 }
