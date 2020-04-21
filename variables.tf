@@ -35,7 +35,7 @@ variable "subnet_id"{
 ##############################################################################
 variable "ssh_key_name" {
   default     = ""
-  description = "The name of the public SSH key (VPC Gen 2 SSH Key) to be used when provisining F5-BIGIP VSI."
+  description = "The name of the public SSH key (VPC Gen 2 SSH Key) to be used when provisining F5-BIGIP VSI. - Test"
 }
 
 ##############################################################################
